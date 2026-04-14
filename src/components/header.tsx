@@ -1,33 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#work", label: "Work" },
+  { href: "/#about", label: "About" },
+  { href: "/#ventures", label: "Ventures" },
+  { href: "/#focus", label: "Focus" },
   { href: "/blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#connect", label: "Connect" },
 ];
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-md border-b border-border/50"
+          : "bg-transparent"
+      }`}
+    >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          geremie<span className="text-accent">.</span>
+        <Link
+          href="/"
+          className="font-serif text-xl tracking-tight text-foreground hover:text-primary transition-colors"
+          onClick={() => setMenuOpen(false)}
+        >
+          Geremie Camara
         </Link>
 
-        {/* Desktop nav */}
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm text-muted transition-colors hover:text-foreground"
+                className="text-sm uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:text-primary"
               >
                 {link.label}
               </Link>
@@ -35,45 +53,23 @@ export function Header() {
           ))}
         </ul>
 
-        {/* Mobile menu button */}
         <button
-          className="md:hidden"
+          className="md:hidden text-foreground"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            {menuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </nav>
 
-      {/* Mobile nav */}
       {menuOpen && (
-        <div className="border-t border-border md:hidden">
-          <ul className="flex flex-col gap-4 px-6 py-4">
+        <div className="border-t border-border/50 bg-background/95 backdrop-blur-md md:hidden">
+          <ul className="flex flex-col gap-4 px-6 py-6">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-muted transition-colors hover:text-foreground"
+                  className="text-sm uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:text-primary"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}

@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Geremie Camara | Software Engineer & Creative Technologist",
+    default: "Geremie Camara — Entrepreneur, TV Producer & Gaming Founder",
     template: "%s | Geremie Camara",
   },
   description:
-    "Personal portfolio and blog of Geremie Camara — software engineer, creative technologist, and builder of digital products.",
+    "Los Angeles-based entrepreneur, TV producer, and gaming industry founder. CoFounder of Live Play Mobile with 30+ years of product experience.",
   metadataBase: new URL("https://geremie.com"),
   openGraph: {
     title: "Geremie Camara",
-    description: "Software Engineer & Creative Technologist",
+    description:
+      "Entrepreneur, TV Producer & Gaming Founder — Building things that move people.",
     url: "https://geremie.com",
     siteName: "Geremie Camara",
     locale: "en_US",
@@ -33,7 +33,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Geremie Camara",
-    description: "Software Engineer & Creative Technologist",
+    description: "Entrepreneur, TV Producer & Gaming Founder",
+  },
+  icons: {
+    icon: [
+      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-icon.png",
   },
 };
 
@@ -43,14 +51,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-sans">
+    <html lang="en" className="bg-background">
+      <body
+        className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen`}
+      >
         <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

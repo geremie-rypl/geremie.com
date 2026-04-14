@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 
 type Props = {
@@ -41,14 +42,14 @@ function renderMarkdown(content: string) {
       elements.push(
         <h2
           key={i}
-          className="mt-10 mb-4 text-2xl font-bold tracking-tight"
+          className="mt-12 mb-6 font-serif text-2xl md:text-3xl text-foreground"
         >
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith("### ")) {
       elements.push(
-        <h3 key={i} className="mt-8 mb-3 text-xl font-semibold">
+        <h3 key={i} className="mt-8 mb-4 font-serif text-xl text-foreground">
           {line.slice(4)}
         </h3>
       );
@@ -56,15 +57,15 @@ function renderMarkdown(content: string) {
       const match = line.match(/^- \*\*(.+?)\*\*(.*)$/);
       if (match) {
         elements.push(
-          <li key={i} className="ml-4 list-disc text-muted leading-relaxed">
-            <strong className="text-foreground">{match[1]}</strong>
+          <li key={i} className="ml-6 list-disc text-muted-foreground leading-relaxed marker:text-primary/60">
+            <strong className="text-foreground font-medium">{match[1]}</strong>
             {match[2]}
           </li>
         );
       }
     } else if (line.startsWith("- ")) {
       elements.push(
-        <li key={i} className="ml-4 list-disc text-muted leading-relaxed">
+        <li key={i} className="ml-6 list-disc text-muted-foreground leading-relaxed marker:text-primary/60">
           {line.slice(2)}
         </li>
       );
@@ -72,7 +73,7 @@ function renderMarkdown(content: string) {
       // skip empty lines
     } else {
       elements.push(
-        <p key={i} className="text-muted leading-relaxed">
+        <p key={i} className="text-muted-foreground leading-relaxed text-lg">
           {line}
         </p>
       );
@@ -81,7 +82,7 @@ function renderMarkdown(content: string) {
     i++;
   }
 
-  return <div className="space-y-4">{elements}</div>;
+  return <div className="space-y-5">{elements}</div>;
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -91,33 +92,34 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-24">
+    <article className="mx-auto max-w-3xl px-6 pt-32 pb-24">
       <Link
         href="/blog"
-        className="text-sm text-accent hover:underline"
+        className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-primary transition-colors"
       >
-        &larr; Back to blog
+        <ArrowLeft className="w-4 h-4" />
+        Back to Journal
       </Link>
-      <header className="mt-8">
-        <time className="text-sm text-muted">
+      <header className="mt-12 pb-10 border-b border-border/30">
+        <time className="text-sm uppercase tracking-[0.15em] text-muted-foreground">
           {new Date(post.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
         </time>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight">
+        <h1 className="mt-4 font-serif text-4xl md:text-5xl lg:text-6xl text-foreground text-balance leading-tight">
           {post.title}
         </h1>
-        <p className="mt-4 text-lg text-muted leading-relaxed">
+        <p className="mt-6 text-xl text-muted-foreground leading-relaxed">
           {post.description}
         </p>
         {post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-6 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent"
+                className="rounded-md border border-border/50 bg-secondary/30 px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground"
               >
                 {tag}
               </span>
