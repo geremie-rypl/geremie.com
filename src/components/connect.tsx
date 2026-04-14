@@ -58,7 +58,7 @@ export function Connect() {
 
           <div className="flex items-center justify-center gap-6">
             <a
-              href="https://linkedin.com/in/geremiecamara"
+              href="https://www.linkedin.com/in/geremie/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 px-6 py-4 border border-border/50 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
@@ -68,7 +68,7 @@ export function Connect() {
               <span className="text-foreground font-medium">LinkedIn</span>
             </a>
             <a
-              href="mailto:hello@geremiecamara.com"
+              href="mailto:hello@geremie.com"
               className="group flex items-center gap-3 px-6 py-4 border border-border/50 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
               aria-label="Send an email"
             >
