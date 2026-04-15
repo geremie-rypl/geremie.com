@@ -37,7 +37,7 @@ export function Header() {
           className="font-serif text-xl tracking-tight text-foreground hover:text-primary transition-colors"
           onClick={() => setMenuOpen(false)}
         >
-          Geremie Camara
+          Geremie<span className="text-primary">.</span>com
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
